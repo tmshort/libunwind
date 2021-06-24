@@ -259,6 +259,7 @@ dwarf_eval_expr (struct dwarf_cursor *c, unw_word_t stack_val, unw_word_t *addr,
 # define pop()                                  \
 (((tos - 1) >= MAX_EXPR_STACK_SIZE) ?           \
   stackerror++ :   stack[--tos]);               \
+Debug(15, "pop -> 0x%lx\n", (unsigned long)stack[tos]); \
 if (stackerror)                                 \
   {                                             \
     Debug (1, "Stack underflow\n");             \
@@ -276,6 +277,7 @@ do {                                            \
       Debug (1, "Stack overflow\n");            \
       return -UNW_EINVAL;                       \
     }                                           \
+  Debug(15, "push -> 0x%lx\n", (unsigned long)_x);  \
   stack[tos++] = _x;                            \
 } while (0)
 
@@ -284,6 +286,7 @@ do {                                            \
 # define pick(n)                                \
 (((tos - 1 - (n)) >= MAX_EXPR_STACK_SIZE) ?     \
   stackerror++ : stack[tos - 1 - (n)]);         \
+Debug(15, "pick -> 0x%lx\n", (unsigned long)stack[tos - 1 - (n)]); \
 if (stackerror)                                 \
   {                                             \
     Debug (1, "Out-of-stack pick\n");           \
